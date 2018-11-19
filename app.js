@@ -16,16 +16,25 @@ console.log('Yargs', argv);
 if (command === 'add'){
   var note = notes.addNote(argv.title, argv.body);
   if (typeof(note) === 'object'){
-    console.log("The note ",note.title, note.body, "was correctly added")
+    console.log('Note created');
+    notes.logNote(note);
   } else{
     console.log("The note was not added because already exists")
   }
 } else if (command === 'list'){
   notes.getAll();
 } else if (command === 'read'){
-  notes.readNote(argv.title);
+  var noteReaded = notes.readNote(argv.title);
+  if (typeof(noteReaded) === 'object'){
+    console.log("Note was found");
+    notes.logNote(noteReaded);
+  } else{
+    console.log("The note was not found");
+  }
 } else if (command === 'remove'){
-  notes.removeNote(argv.title);
+  var noteRemoved = notes.removeNote(argv.title);
+  var message = noteRemoved ? 'Note was removed' : 'Note not found';
+  console.log(message);
 } else{
   console.log('Command not recognized');
 }
